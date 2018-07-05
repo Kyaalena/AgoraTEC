@@ -59,6 +59,8 @@ module Decidim
         toggle_allow(authorization.user == user && not_already_active?(authorization))
       when :update
         toggle_allow(authorization.user == user && !authorization.granted?)
+      when :destroy
+        toggle_allow(authorization.user == user && (already_active?(authorization) || not_already_active?(authorization)))
       end
     end
 
