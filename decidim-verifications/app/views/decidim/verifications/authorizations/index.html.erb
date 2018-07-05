@@ -32,6 +32,11 @@
                   </span>
                 </div>
               </div>
+              <div class="card--list__text">
+                <%= link_to "Eliminar", authorization_method.root_path, class: 'deled label',
+                 action: :destroy, controller: 'AuthorizationsController', id: @authorization,
+                data: {confirm: "¿Está seguro de eliminar los datos?"} %>
+              </div>
               <div class="card--list__data">
                 <span class="card--list__data__icon">
                   <%= icon "chevron-right" %>
@@ -41,6 +46,7 @@
           <% end %>
         <% end %>
       </div>
+
     <% end %>
 
     <% if unauthorized_methods.any? %>

@@ -16,6 +16,7 @@
         <% end %>
       </span>
     </div>
+
   </div>
   <% if authorization.expired? %>
     <div class="card--list__data">
@@ -24,4 +25,11 @@
       </span>
     </div>
   <% end %>
+  <div class="card--list__data">
+      <div class="card--list__data__icon">
+        <%=link_to "Eliminar", decidim_verifications.authorizations_path, class: 'deled label',
+         method: :delete,
+        data: {confirm: "¿Está seguro de eliminar los datos?"} %>
+      </div>
+  </div>
 </div>

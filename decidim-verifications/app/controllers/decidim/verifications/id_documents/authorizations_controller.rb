@@ -64,6 +64,30 @@ module Decidim
           end
         end
 
+        def destroy
+          enforce_permission_to :destroy,  :authorization, authorization: @authorization
+
+          @form = UploadForm.from_params(params.merge(user: current_user))
+
+          @authorization = UploadForm.from_params(params.merge(user: current_user,
+              verification_attachment: params[:id_document_destroy][:verification_attachment] || @authorization.verification_attachment
+            )
+          )
+          @authorization.destroy
+
+          PerformAuthorizationStep.call(@authorization, @form) do
+            on(:ok) do
+              flash[:notice] = t("authorizations.destroy.success", scope: "decidim.verifications.id_documents")
+              redirect_to decidim_verifications.authorizations_path
+            end
+
+            on(:invalid) do
+              flash[:alert] = t("authorizations.destroy.error", scope: "decidim.verifications.id_documents")
+              redirect_to decidim_verifications.authorizations_path
+            end
+          end
+        end
+
         private
 
         # rubocop:disable Naming/MemoizedInstanceVariableName
